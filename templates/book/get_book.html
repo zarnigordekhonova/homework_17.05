@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+<h1>Welcome to our Bookshop :)</h1>
+
+{% for i in books%}
+    <a href="{% url 'Products:detail-view' i.pk %}">{{i.title}}</a><br><br>
+{%endfor%}
+
+<a href="{% url 'Products:create-book' %}"><button>ADD BOOK</button></a><br><br>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+<title>Bookshop</title>
+
+<h1>Reviews</h1><br>
+
+
+<body>
+{% for item in items %}
+<a href="{% url 'Products:review-detail' item.pk %}" >{{ item.user }}</a><hr>
+{% endfor %}
+
+
+</body>
