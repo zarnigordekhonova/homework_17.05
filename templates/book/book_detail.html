@@ -1,25 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ object.title }}</title>
+    <title>{{ book.title }}</title>
 </head>
 <body>
-<img src="{{ object.image.url }}" height="200px"><br>
-TITLE: {{ object.title }}<br>
-DESCRIPTION: {{ object.description }}<br>
-ISBN: {{ object.ISBN }}<br>
-PRICE: {{ object.price }}<br>
-LANGUAGE: {{ object.language }}<br>
-CATEGORY: {{ object.category }}<br>
-PAGES: {{ object.pages }}<br>
-
-
-<a href="{% url 'Products:get-review' object.pk %}"><button>GET REVIEW</button></a><br>
-<a href="{% url 'Products:add-review' object.pk %}"><button>ADD REVIEW</button></a><br><br>
-
-<a href="{% url 'Products:update-book' object.pk %}"><button>UPDATE BOOK</button></a><br><br>
-<a href="{% url 'Products:delete-book' object.pk %}"><button>DELETE BOOK</button></a><br><br>
+<h1>Title: {{ book.title }}</h1>
+<img src="{{ book.image.url }}" height="200px"> <br><br>
+<h4>Description: {{ book.description }}</h4>
+<h4>ISBN: {{ book.ISBN }}</h4>
+<h4>Language: {{ book.language }}</h4>
+<h4>Price: {{ book.price }}</h4>
+<h4>Pages: {{ book.pages }}</h4>
+<h4>Category: {{ book.category }}</h4>
 
 </body>
-</html>
+<a href="{% url 'Products:delete-book' book.pk %}" >Delete</a>
+<h2>Reviews</h2>
+<a href="{% url 'Products:add-review' book.pk %}" >Add Review</a>
+{% for review in reviews %}
+    <h4>{{ review.user.username }} | {{ review.star_given }}</h4>
+    <p>{{ review.comment }}</p><hr>
+{% endfor %}

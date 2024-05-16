@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Books</title>
+    <title>Create Book</title>
 </head>
 <body>
-<form method="POST" enctype="multipart/form-data" >
-    {% csrf_token %}
-    {{ form.as_p }}
 
-    <button type="submit">Save</button>
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
 </form>
+
 </body>
 </html>

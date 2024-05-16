@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Books</title>
-</head>
-<body>
-<h1>Welcome to our Bookshop :)</h1>
+{% extends "base.html" %}
 
-{% for i in books%}
-    <a href="{% url 'Products:detail-view' i.pk %}">{{i.title}}</a><br><br>
-{%endfor%}
+    <title>{% block title %} Books {% endblock %}</title>
+
+{% block content %}
+<body>
+<h1>Books Page</h1>
+<a href="{% url 'Products:create-book'%}">Add Book</a> <br><br><hr>
+
+{% for i in book %}
+    <a href="{% url 'Products:detail-view' i.pk %}">{{ i.title }}</a> <br><br>
+{% endfor %}
+</body>
+{% endblock content %}
 
 <a href="{% url 'Products:create-book' %}"><button>ADD BOOK</button></a><br><br>
 
