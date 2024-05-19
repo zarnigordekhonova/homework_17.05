@@ -4,7 +4,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import AddReviewForm, ReviewUpdateForm
-from .models import Books, Reviews
+from .models import Books, Reviews, BookCategory, BookAuthor
 from django.urls import reverse_lazy
 # Create your views here.
 
@@ -64,3 +64,33 @@ class AddReviewView(LoginRequiredMixin, View):
 
             review.save()
             return redirect('Products:detail-view', pk=pk)
+
+
+
+class ReviewUpdateView(View):
+    def get(self, request, pk):
+        review = Reviews.objects.get(pk=pk)
+        update_review_form = ReviewUpdateForm(instance=review)
+        context = {
+            'update_review_form': update_review_form
+        }
+        return render(request, 'book/review_update.html', context=context)
+
+    def post(self, request, pk):
+        review = Reviews.objects.get(pk=pk)
+        update_review_form = ReviewUpdateForm(request.POST, instance=review)
+        if update_review_form.is_valid():
+            update_review = update_review_form.save(commit=False)
+            update_review.book_id = review.book_id
+            update_review.save()
+            return redirect('Products:BookListView', pk=review.book_id)
+        else:
+            return render(request, 'book/review_update.html', {'update_review_form': update_review_form})
+
+
+
+class CategoriesListView(View):
+    def get(self, request):
+        category = BookCategory.objects.all()
+
+        return render(request, 'book/products.html', {'categorys': category})

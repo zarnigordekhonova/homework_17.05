@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-from .forms import CustomUserForm
+from .forms import *
 # Create your views here.
 
 
@@ -55,3 +55,22 @@ class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
         return redirect('landing_page')
+
+
+class ProfileView(View):
+    def get(self, request):
+        return render(request, 'profile.html', {"user": request.user})
+
+
+class ProfileUpdateView(View):
+    def get(self, request):
+        update_form = ProfileUpdateForm(instance=request.user)
+        return render(request, 'profile_update.html', {"form": update_form})
+
+    def post(self, request):
+        update_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
+        if update_form.is_valid():
+            update_form.save()
+            return redirect('users:profile')
+        else:
+            return render(request, 'profile_update.html', {"form": update_form})
